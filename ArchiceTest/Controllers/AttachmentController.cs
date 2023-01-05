@@ -29,27 +29,25 @@ namespace ArchiceTest.Controllers
         [HttpPost("FileUpload")]
         public async Task<IActionResult> Index(List<IFormFile> files, Attachment attachment)
         {
-            long size = files.Sum(f => f.Length);
-            string filename = string.Empty;
-            
-            var filePaths = new List<string>();
+  
             foreach (var formFile in files)
+
             {
                 if (formFile.Length > 0)
-                {
+                {                       
+                        var filePath = Path.GetFullPath( Path.Combine(Directory.GetCurrentDirectory(),formFile.FileName));
+                        Attachment attachmentItem = new Attachment()
+                        {
+                            AttachPath = filePath
+                        };
 
-                    // full path to file in temp location
-                    var filePath = Path.GetFullPath( Path.Combine(Directory.GetCurrentDirectory(),formFile.FileName));
+                    _context.attachments.Add(attachmentItem);
                     
-                    filePaths.Add(filePath);
-                    
-                    attachment.AttachPath = filePath;
-                    filename = Guid.NewGuid() + Path.GetExtension(formFile.FileName);
-                    _context.Add(attachment);
-                  if (formFile.ContentType.Contains("image") ) {  
+
+                    if (formFile.ContentType.Contains("image") ) {  
                     using (var image = Image.Load(formFile.OpenReadStream()))
                     {
-                        string newsize = ImageResize(image, 1500, 1500);
+                        string newsize = ImageResize(image, 1920, 1920);
                         string[] sizearray = newsize.Split(',');
                         image.Mutate(x => x.Resize(Convert.ToInt32(sizearray[1]), Convert.ToInt32(sizearray[0])));
                         image.Save(filePath);
@@ -63,10 +61,14 @@ namespace ArchiceTest.Controllers
                         await formFile.CopyToAsync(stream);
                     }
                     }
-                }
-            }
 
+                }
+                
+            } 
+                        
             _context.SaveChanges();
+           
+            
 
             return RedirectToAction("Index", "Home");
         }

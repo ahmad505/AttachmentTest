@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ArchiceTest.Migrations
+namespace AttachmentTest.Migrations
 {
     public partial class init : Migration
     {

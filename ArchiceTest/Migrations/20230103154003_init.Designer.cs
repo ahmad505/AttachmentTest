@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ArchiceTest.Migrations
+namespace AttachmentTest.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221230140244_init")]
+    [Migration("20230103154003_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
