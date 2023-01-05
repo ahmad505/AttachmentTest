@@ -21,13 +21,19 @@ namespace ArchiceTest.Controllers
         {
             _context = context;
         }
-
+        
         public IActionResult Index()
+        {
+            var AttachList = _context.attachments.ToList();
+            return View(AttachList);
+        }
+        [HttpGet("Addattachment")]
+        public IActionResult Addattachment()
         {
             return View();
         }
-        [HttpPost("FileUpload")]
-        public async Task<IActionResult> Index(List<IFormFile> files, Attachment attachment)
+        [HttpPost("Addattachment")]
+        public async Task<IActionResult> Addattachment(List<IFormFile> files, Attachment attachment)
         {
   
             foreach (var formFile in files)

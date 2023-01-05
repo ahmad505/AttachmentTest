@@ -59,7 +59,7 @@ namespace ArchiceTest
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Attchment}/{action=Index}/{id?}");
             });
         }
     }
